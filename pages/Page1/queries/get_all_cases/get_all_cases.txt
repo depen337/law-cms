@@ -1,0 +1,1 @@
+SELECT * FROM cases ORDER BY date_opened DESC;

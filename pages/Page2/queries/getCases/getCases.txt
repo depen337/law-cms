@@ -1,0 +1,1 @@
+SELECT * FROM cases ORDER BY case_id DESC;

@@ -1,0 +1,1 @@
+INSERT INTO cases (case_name, client_name) VALUES ('Test Case 001', 'John Doe');

@@ -1,0 +1,13 @@
+CREATE TABLE documents (
+    document_id SERIAL PRIMARY KEY,
+    case_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    upload_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    document_type VARCHAR(100),
+    s3_path VARCHAR(1024),
+    summary TEXT,
+    CONSTRAINT fk_case
+        FOREIGN KEY(case_id) 
+        REFERENCES cases(case_id)
+        ON DELETE CASCADE
+);

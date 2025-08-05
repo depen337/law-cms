@@ -1,0 +1,8 @@
+CREATE TABLE cases (
+    case_id SERIAL PRIMARY KEY,
+    case_name VARCHAR(255) NOT NULL,
+    client_name VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'Open',
+    date_opened TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    summary TEXT
+);

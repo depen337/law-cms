@@ -22,11 +22,13 @@
   "pages": [
     {
       "id": "Page1",
-      "isDefault": true
+      "isDefault": true,
+      "name": "Dashboard"
     },
     {
       "id": "Page2",
-      "isDefault": false
+      "isDefault": false,
+      "name": "CaseDetails"
     }
   ],
   "unpublishedAppLayout": {

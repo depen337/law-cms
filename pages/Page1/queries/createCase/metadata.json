@@ -1,0 +1,34 @@
+{
+  "pluginType": "DB",
+  "pluginId": "postgres-plugin",
+  "unpublishedAction": {
+    "name": "createCase",
+    "datasource": {
+      "name": "PostgreSQL",
+      "pluginId": "postgres-plugin"
+    },
+    "pageId": "Page1",
+    "actionConfiguration": {
+      "timeoutInMillisecond": 10000,
+      "paginationType": "NONE",
+      "encodeParamsToggle": true,
+      "body": "INSERT INTO cases (\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\n) VALUES (\n  {{ CaseNameInput.text }},\n  {{ ClientNameInput.text }},\n  {{ CaseNumberInput.text }},\n  {{ CaseDescriptionInput.text }},\n  'Active',\n  NOW(),\n  NOW()\n) RETURNING case_id;"
+    },
+    "executeOnLoad": false,
+    "dynamicBindingPathList": [
+      {
+        "key": "body"
+      }
+    ],
+    "isValid": true,
+    "invalids": [],
+    "messages": [],
+    "jsonPathKeys": [
+      "CaseNameInput.text",
+      "ClientNameInput.text", 
+      "CaseNumberInput.text",
+      "CaseDescriptionInput.text"
+    ],
+    "userSetOnLoad": false
+  }
+}

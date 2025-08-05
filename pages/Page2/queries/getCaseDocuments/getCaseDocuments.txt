@@ -1,0 +1,11 @@
+SELECT 
+  document_id,
+  document_name,
+  s3_path,
+  event_date,
+  document_type,
+  ai_analysis,
+  created_at
+FROM documents 
+WHERE case_id = {{ appsmith.URL.queryParams.case_id }}
+ORDER BY event_date ASC;

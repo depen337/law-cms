@@ -5,8 +5,239 @@
       {
         "dsl": {
           "backgroundColor": "none",
-          "bottomRow": 410,
+          "bottomRow": 460,
           "canExtend": true,
+          "children": [
+            {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": "0.375rem",
+              "bottomRow": 6,
+              "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              "leftColumn": 4,
+              "rightColumn": 60,
+              "text": "Legal Case Management System",
+              "textAlign": "CENTER",
+              "textSize": "HEADING1",
+              "topRow": 2,
+              "type": "TEXT_WIDGET",
+              "version": 1,
+              "widgetId": "title_text",
+              "widgetName": "TitleText"
+            },
+            {
+              "backgroundColor": "#3366FF",
+              "bottomRow": 12,
+              "buttonColor": "#3366FF",
+              "leftColumn": 52,
+              "onClick": "{{showModal('NewCaseModal')}}",
+              "rightColumn": 60,
+              "text": "New Case",
+              "topRow": 8,
+              "type": "BUTTON_WIDGET",
+              "version": 1,
+              "widgetId": "new_case_btn",
+              "widgetName": "NewCaseButton"
+            },
+            {
+              "bottomRow": 32,
+              "columnOrder": [
+                "case_id",
+                "case_name",
+                "client_name",
+                "created_at",
+                "status"
+              ],
+              "defaultPageSize": 10,
+              "dynamicBindingPathList": [
+                {
+                  "key": "tableData"
+                },
+                {
+                  "key": "primaryColumns.case_id.computedValue"
+                },
+                {
+                  "key": "primaryColumns.case_name.computedValue"
+                },
+                {
+                  "key": "primaryColumns.client_name.computedValue"
+                },
+                {
+                  "key": "primaryColumns.created_at.computedValue"
+                },
+                {
+                  "key": "primaryColumns.status.computedValue"
+                }
+              ],
+              "leftColumn": 4,
+              "onRowClick": "{{navigateTo('CaseDetails', {case_id: currentRow.case_id}, 'SAME_WINDOW')}}",
+              "primaryColumns": {
+                "case_id": {
+                  "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.case_id))}}",
+                  "id": "case_id",
+                  "label": "Case ID",
+                  "originalId": "case_id",
+                  "width": 100
+                },
+                "case_name": {
+                  "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.case_name))}}",
+                  "id": "case_name",
+                  "label": "Case Name",
+                  "originalId": "case_name",
+                  "width": 200
+                },
+                "client_name": {
+                  "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.client_name))}}",
+                  "id": "client_name",
+                  "label": "Client Name",
+                  "originalId": "client_name",
+                  "width": 150
+                },
+                "created_at": {
+                  "computedValue": "{{CasesTable.tableData.map((currentRow) => ( moment(currentRow.created_at).format('MMM DD, YYYY')))}}",
+                  "id": "created_at",
+                  "label": "Created",
+                  "originalId": "created_at",
+                  "width": 120
+                },
+                "status": {
+                  "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.status || 'Active'))}}",
+                  "id": "status",
+                  "label": "Status",
+                  "originalId": "status",
+                  "width": 100
+                }
+              },
+              "rightColumn": 60,
+              "tableData": "{{getCases.data}}",
+              "topRow": 14,
+              "type": "TABLE_WIDGET",
+              "version": 3,
+              "widgetId": "cases_table",
+              "widgetName": "CasesTable"
+            },
+            {
+              "animateLoading": true,
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": "0.375rem",
+              "bottomRow": 280,
+              "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              "children": [
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "0.375rem",
+                  "bottomRow": 6,
+                  "leftColumn": 2,
+                  "rightColumn": 62,
+                  "text": "Create New Case",
+                  "textAlign": "CENTER",
+                  "textSize": "HEADING2",
+                  "topRow": 1,
+                  "type": "TEXT_WIDGET",
+                  "version": 1,
+                  "widgetId": "modal_title",
+                  "widgetName": "ModalTitle"
+                },
+                {
+                  "backgroundColor": "#FAFAFA",
+                  "borderRadius": "0.375rem",
+                  "bottomRow": 12,
+                  "leftColumn": 2,
+                  "placeholderText": "Enter case name",
+                  "rightColumn": 32,
+                  "text": "",
+                  "topRow": 8,
+                  "type": "INPUT_WIDGET",
+                  "validation": true,
+                  "version": 2,
+                  "widgetId": "case_name_input",
+                  "widgetName": "CaseNameInput"
+                },
+                {
+                  "backgroundColor": "#FAFAFA",
+                  "borderRadius": "0.375rem",
+                  "bottomRow": 12,
+                  "leftColumn": 34,
+                  "placeholderText": "Enter client name",
+                  "rightColumn": 62,
+                  "text": "",
+                  "topRow": 8,
+                  "type": "INPUT_WIDGET",
+                  "validation": true,
+                  "version": 2,
+                  "widgetId": "client_name_input",
+                  "widgetName": "ClientNameInput"
+                },
+                {
+                  "backgroundColor": "#FAFAFA",
+                  "borderRadius": "0.375rem",
+                  "bottomRow": 18,
+                  "leftColumn": 2,
+                  "placeholderText": "Enter case number",
+                  "rightColumn": 32,
+                  "text": "",
+                  "topRow": 14,
+                  "type": "INPUT_WIDGET",
+                  "validation": false,
+                  "version": 2,
+                  "widgetId": "case_number_input",
+                  "widgetName": "CaseNumberInput"
+                },
+                {
+                  "backgroundColor": "#FAFAFA",
+                  "borderRadius": "0.375rem",
+                  "bottomRow": 24,
+                  "leftColumn": 2,
+                  "placeholderText": "Enter case description",
+                  "rightColumn": 62,
+                  "text": "",
+                  "topRow": 20,
+                  "type": "INPUT_WIDGET",
+                  "validation": false,
+                  "version": 2,
+                  "widgetId": "case_description_input",
+                  "widgetName": "CaseDescriptionInput"
+                },
+                {
+                  "backgroundColor": "#DC2626",
+                  "bottomRow": 30,
+                  "buttonColor": "#DC2626",
+                  "leftColumn": 44,
+                  "onClick": "{{closeModal('NewCaseModal')}}",
+                  "rightColumn": 52,
+                  "text": "Cancel",
+                  "topRow": 26,
+                  "type": "BUTTON_WIDGET",
+                  "version": 1,
+                  "widgetId": "cancel_btn",
+                  "widgetName": "CancelButton"
+                },
+                {
+                  "backgroundColor": "#059669",
+                  "bottomRow": 30,
+                  "buttonColor": "#059669",
+                  "leftColumn": 54,
+                  "onClick": "{{createCase.run().then(() => {getCases.run(); closeModal('NewCaseModal'); showAlert('Case created successfully!', 'success')})}}",
+                  "rightColumn": 62,
+                  "text": "Save Case",
+                  "topRow": 26,
+                  "type": "BUTTON_WIDGET",
+                  "version": 1,
+                  "widgetId": "save_btn",
+                  "widgetName": "SaveButton"
+                }
+              ],
+              "height": 400,
+              "leftColumn": 0,
+              "rightColumn": 64,
+              "shouldScrollContents": false,
+              "topRow": 120,
+              "type": "MODAL_WIDGET",
+              "version": 2,
+              "widgetId": "new_case_modal",
+              "widgetName": "NewCaseModal",
+              "width": 456
+            }
+          ],
           "containerStyle": "none",
           "detachFromLayout": true,
           "dynamicBindingPathList": [],
@@ -26,7 +257,7 @@
         }
       }
     ],
-    "name": "Page1",
-    "slug": "page1"
+    "name": "Dashboard",
+    "slug": "dashboard"
   }
 }

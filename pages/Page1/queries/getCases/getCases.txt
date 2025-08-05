@@ -1,0 +1,11 @@
+SELECT 
+  case_id,
+  case_name,
+  client_name,
+  case_number,
+  description,
+  status,
+  created_at,
+  updated_at
+FROM cases 
+ORDER BY case_id DESC;

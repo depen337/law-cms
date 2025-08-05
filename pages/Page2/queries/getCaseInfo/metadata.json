@@ -1,0 +1,31 @@
+{
+  "pluginType": "DB",
+  "pluginId": "postgres-plugin",
+  "unpublishedAction": {
+    "name": "getCaseInfo",
+    "datasource": {
+      "name": "PostgreSQL",
+      "pluginId": "postgres-plugin"
+    },
+    "pageId": "Page2",
+    "actionConfiguration": {
+      "timeoutInMillisecond": 10000,
+      "paginationType": "NONE",
+      "encodeParamsToggle": true,
+      "body": "SELECT \n  case_id,\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\nFROM cases \nWHERE case_id = {{ appsmith.URL.queryParams.case_id }};"
+    },
+    "executeOnLoad": true,
+    "dynamicBindingPathList": [
+      {
+        "key": "body"
+      }
+    ],
+    "isValid": true,
+    "invalids": [],
+    "messages": [],
+    "jsonPathKeys": [
+      "appsmith.URL.queryParams.case_id"
+    ],
+    "userSetOnLoad": false
+  }
+}

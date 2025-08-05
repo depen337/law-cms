@@ -1,0 +1,17 @@
+INSERT INTO cases (
+  case_name,
+  client_name,
+  case_number,
+  description,
+  status,
+  created_at,
+  updated_at
+) VALUES (
+  {{ CaseNameInput.text }},
+  {{ ClientNameInput.text }},
+  {{ CaseNumberInput.text }},
+  {{ CaseDescriptionInput.text }},
+  'Active',
+  NOW(),
+  NOW()
+) RETURNING case_id;

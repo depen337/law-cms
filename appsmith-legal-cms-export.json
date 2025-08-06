@@ -1,0 +1,641 @@
+{
+  "clientSchemaVersion": 1,
+  "serverSchemaVersion": 5,
+  "exportedApplication": {
+    "name": "Legal Case Management System",
+    "organizationId": "123",
+    "pages": [
+      {
+        "id": "Dashboard",
+        "name": "Dashboard",
+        "isDefault": true,
+        "slug": "dashboard",
+        "layouts": [
+          {
+            "viewMode": false,
+            "dsl": {
+              "widgetName": "MainContainer",
+              "backgroundColor": "none",
+              "rightColumn": 4896,
+              "snapColumns": 64,
+              "detachFromLayout": true,
+              "widgetId": "0",
+              "topRow": 0,
+              "bottomRow": 380,
+              "containerStyle": "none",
+              "snapRows": 124,
+              "parentRowSpace": 1,
+              "type": "CANVAS_WIDGET",
+              "canExtend": true,
+              "version": 17,
+              "minHeight": 1292,
+              "parentColumnSpace": 1,
+              "leftColumn": 0,
+              "children": [
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 6,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "leftColumn": 4,
+                  "rightColumn": 60,
+                  "text": "Legal Case Management System",
+                  "textAlign": "CENTER",
+                  "textSize": "1.25rem",
+                  "topRow": 2,
+                  "type": "TEXT_WIDGET",
+                  "version": 1,
+                  "widgetId": "title_text",
+                  "widgetName": "TitleText"
+                },
+                {
+                  "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
+                  "bottomRow": 12,
+                  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+                  "leftColumn": 52,
+                  "onClick": "{{showModal('NewCaseModal')}}",
+                  "rightColumn": 60,
+                  "text": "New Case",
+                  "topRow": 8,
+                  "type": "BUTTON_WIDGET",
+                  "version": 1,
+                  "widgetId": "new_case_btn",
+                  "widgetName": "NewCaseButton"
+                },
+                {
+                  "bottomRow": 32,
+                  "columnOrder": [
+                    "case_id",
+                    "case_name", 
+                    "client_name",
+                    "created_at",
+                    "status"
+                  ],
+                  "defaultPageSize": 10,
+                  "dynamicBindingPathList": [
+                    {
+                      "key": "tableData"
+                    }
+                  ],
+                  "leftColumn": 4,
+                  "onRowClick": "{{navigateTo('CaseDetails', {case_id: currentRow.case_id}, 'SAME_WINDOW')}}",
+                  "primaryColumns": {
+                    "case_id": {
+                      "computedValue": "{{CasesTable.tableData.map((currentRow, currentIndex) => ( currentRow.case_id))}}",
+                      "id": "case_id",
+                      "label": "Case ID",
+                      "originalId": "case_id",
+                      "width": 100
+                    },
+                    "case_name": {
+                      "computedValue": "{{CasesTable.tableData.map((currentRow, currentIndex) => ( currentRow.case_name))}}",
+                      "id": "case_name", 
+                      "label": "Case Name",
+                      "originalId": "case_name",
+                      "width": 200
+                    },
+                    "client_name": {
+                      "computedValue": "{{CasesTable.tableData.map((currentRow, currentIndex) => ( currentRow.client_name))}}",
+                      "id": "client_name",
+                      "label": "Client Name", 
+                      "originalId": "client_name",
+                      "width": 150
+                    },
+                    "created_at": {
+                      "computedValue": "{{CasesTable.tableData.map((currentRow, currentIndex) => ( moment(currentRow.created_at).format('MMM DD, YYYY')))}}",
+                      "id": "created_at",
+                      "label": "Created",
+                      "originalId": "created_at",
+                      "width": 120
+                    },
+                    "status": {
+                      "computedValue": "{{CasesTable.tableData.map((currentRow, currentIndex) => ( currentRow.status || 'Active'))}}",
+                      "id": "status",
+                      "label": "Status",
+                      "originalId": "status", 
+                      "width": 100
+                    }
+                  },
+                  "rightColumn": 60,
+                  "tableData": "{{getCases.data}}",
+                  "topRow": 14,
+                  "type": "TABLE_WIDGET_V2",
+                  "version": 1,
+                  "widgetId": "cases_table",
+                  "widgetName": "CasesTable"
+                },
+                {
+                  "animateLoading": true,
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 280,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "children": [
+                    {
+                      "backgroundColor": "#FFFFFF",
+                      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                      "bottomRow": 6,
+                      "leftColumn": 2,
+                      "rightColumn": 62,
+                      "text": "Create New Case",
+                      "textAlign": "CENTER",
+                      "textSize": "1.25rem",
+                      "topRow": 1,
+                      "type": "TEXT_WIDGET",
+                      "version": 1,
+                      "widgetId": "modal_title",
+                      "widgetName": "ModalTitle"
+                    },
+                    {
+                      "backgroundColor": "#FAFAFA",
+                      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                      "bottomRow": 12,
+                      "leftColumn": 2,
+                      "placeholderText": "Enter case name",
+                      "rightColumn": 32,
+                      "text": "",
+                      "topRow": 8,
+                      "type": "INPUT_WIDGET_V2",
+                      "validation": true,
+                      "version": 1,
+                      "widgetId": "case_name_input", 
+                      "widgetName": "CaseNameInput"
+                    },
+                    {
+                      "backgroundColor": "#FAFAFA",
+                      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                      "bottomRow": 12,
+                      "leftColumn": 34,
+                      "placeholderText": "Enter client name",
+                      "rightColumn": 62,
+                      "text": "",
+                      "topRow": 8,
+                      "type": "INPUT_WIDGET_V2",
+                      "validation": true,
+                      "version": 1,
+                      "widgetId": "client_name_input",
+                      "widgetName": "ClientNameInput"
+                    },
+                    {
+                      "backgroundColor": "#DC2626",
+                      "bottomRow": 18,
+                      "buttonColor": "#DC2626", 
+                      "leftColumn": 44,
+                      "onClick": "{{closeModal('NewCaseModal')}}",
+                      "rightColumn": 52,
+                      "text": "Cancel",
+                      "topRow": 14,
+                      "type": "BUTTON_WIDGET",
+                      "version": 1,
+                      "widgetId": "cancel_btn",
+                      "widgetName": "CancelButton"
+                    },
+                    {
+                      "backgroundColor": "#059669",
+                      "bottomRow": 18,
+                      "buttonColor": "#059669",
+                      "leftColumn": 54,
+                      "onClick": "{{createCase.run().then(() => {getCases.run(); closeModal('NewCaseModal'); showAlert('Case created successfully!', 'success')})}}",
+                      "rightColumn": 62,
+                      "text": "Save Case",
+                      "topRow": 14,
+                      "type": "BUTTON_WIDGET",
+                      "version": 1,
+                      "widgetId": "save_btn",
+                      "widgetName": "SaveButton"
+                    }
+                  ],
+                  "height": 400,
+                  "leftColumn": 0,
+                  "rightColumn": 64,
+                  "shouldScrollContents": false,
+                  "topRow": 120,
+                  "type": "MODAL_WIDGET",
+                  "version": 2,
+                  "widgetId": "new_case_modal",
+                  "widgetName": "NewCaseModal",
+                  "width": 456
+                }
+              ]
+            }
+          }
+        ],
+        "userPermissions": []
+      },
+      {
+        "id": "CaseDetails",
+        "name": "CaseDetails", 
+        "isDefault": false,
+        "slug": "casedetails",
+        "layouts": [
+          {
+            "viewMode": false,
+            "dsl": {
+              "widgetName": "MainContainer",
+              "backgroundColor": "none",
+              "rightColumn": 4896,
+              "snapColumns": 64,
+              "detachFromLayout": true,
+              "widgetId": "0",
+              "topRow": 0,
+              "bottomRow": 580,
+              "containerStyle": "none",
+              "snapRows": 124,
+              "parentRowSpace": 1,
+              "type": "CANVAS_WIDGET",
+              "canExtend": true,
+              "version": 17,
+              "minHeight": 1292,
+              "parentColumnSpace": 1,
+              "leftColumn": 0,
+              "children": [
+                {
+                  "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
+                  "bottomRow": 4,
+                  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+                  "leftColumn": 4,
+                  "onClick": "{{navigateTo('Dashboard', {}, 'SAME_WINDOW')}}",
+                  "rightColumn": 12,
+                  "text": "← Back",
+                  "topRow": 0,
+                  "type": "BUTTON_WIDGET",
+                  "version": 1,
+                  "widgetId": "back_btn",
+                  "widgetName": "BackButton"
+                },
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 10,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "dynamicBindingPathList": [
+                    {
+                      "key": "text"
+                    }
+                  ],
+                  "leftColumn": 4,
+                  "rightColumn": 60,
+                  "text": "{{getCaseInfo.data[0]?.case_name || 'Case Details'}}",
+                  "textAlign": "CENTER",
+                  "textSize": "1.5rem",
+                  "topRow": 5,
+                  "type": "TEXT_WIDGET",
+                  "version": 1,
+                  "widgetId": "case_title",
+                  "widgetName": "CaseTitle"
+                },
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 22,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "leftColumn": 4,
+                  "rightColumn": 60,
+                  "text": "Document Timeline",
+                  "textAlign": "LEFT", 
+                  "textSize": "1.25rem",
+                  "topRow": 18,
+                  "type": "TEXT_WIDGET",
+                  "version": 1,
+                  "widgetId": "timeline_title",
+                  "widgetName": "TimelineTitle"
+                },
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 38,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "dynamicBindingPathList": [
+                    {
+                      "key": "listData"
+                    }
+                  ],
+                  "itemSpacing": 4,
+                  "leftColumn": 4,
+                  "listData": "{{getCaseDocuments.data}}",
+                  "orientation": "HORIZONTAL",
+                  "rightColumn": 60,
+                  "template": {
+                    "backgroundColor": "#ffffff",
+                    "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                    "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                    "children": [
+                      {
+                        "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
+                        "borderRadius": "50%",
+                        "bottomRow": 2,
+                        "iconName": "document",
+                        "iconSize": 16,
+                        "leftColumn": 1,
+                        "rightColumn": 3,
+                        "topRow": 0,
+                        "type": "ICON_WIDGET",
+                        "version": 1,
+                        "widgetId": "timeline_icon",
+                        "widgetName": "TimelineIcon"
+                      },
+                      {
+                        "dynamicBindingPathList": [
+                          {
+                            "key": "text"
+                          }
+                        ],
+                        "fontSize": "12px",
+                        "fontWeight": "bold",
+                        "leftColumn": 0,
+                        "rightColumn": 16,
+                        "text": "{{currentItem.document_name}}",
+                        "textAlign": "CENTER",
+                        "topRow": 3,
+                        "bottomRow": 5,
+                        "type": "TEXT_WIDGET",
+                        "version": 1,
+                        "widgetId": "doc_name",
+                        "widgetName": "DocumentName"
+                      },
+                      {
+                        "backgroundColor": "#059669",
+                        "bottomRow": 9,
+                        "buttonColor": "#059669",
+                        "leftColumn": 4,
+                        "onClick": "{{storeValue('selectedDocument', currentItem)}}",
+                        "rightColumn": 12,
+                        "text": "View",
+                        "topRow": 7,
+                        "type": "BUTTON_WIDGET",
+                        "version": 1,
+                        "widgetId": "view_btn",
+                        "widgetName": "ViewButton"
+                      }
+                    ]
+                  },
+                  "topRow": 24,
+                  "type": "LIST_WIDGET",
+                  "version": 1,
+                  "widgetId": "documents_timeline",
+                  "widgetName": "DocumentsTimeline"
+                },
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 70,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "dynamicBindingPathList": [
+                    {
+                      "key": "docUrl"
+                    }
+                  ],
+                  "docUrl": "{{appsmith.store.selectedDocument?.s3_path}}",
+                  "leftColumn": 4,
+                  "rightColumn": 60,
+                  "topRow": 42,
+                  "type": "PDF_VIEWER_WIDGET",
+                  "version": 1,
+                  "widgetId": "pdf_viewer",
+                  "widgetName": "PDFViewer"
+                },
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                  "bottomRow": 120,
+                  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+                  "children": [
+                    {
+                      "backgroundColor": "#FFFFFF",
+                      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                      "bottomRow": 4,
+                      "leftColumn": 2,
+                      "rightColumn": 62,
+                      "text": "AI Document Analysis",
+                      "textAlign": "CENTER",
+                      "textSize": "1.25rem",
+                      "topRow": 1,
+                      "type": "TEXT_WIDGET",
+                      "version": 1,
+                      "widgetId": "ai_title",
+                      "widgetName": "AITitle"
+                    },
+                    {
+                      "backgroundColor": "#FFFFFF",
+                      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+                      "bottomRow": 10,
+                      "dynamicBindingPathList": [
+                        {
+                          "key": "text"
+                        }
+                      ],
+                      "leftColumn": 2,
+                      "rightColumn": 62,
+                      "text": "{{appsmith.store.selectedDocument?.ai_analysis?.summary || 'No summary available'}}",
+                      "textAlign": "LEFT",
+                      "topRow": 6,
+                      "type": "TEXT_WIDGET",
+                      "version": 1,
+                      "widgetId": "summary_text",
+                      "widgetName": "SummaryText"
+                    }
+                  ],
+                  "dynamicBindingPathList": [
+                    {
+                      "key": "isVisible"
+                    }
+                  ],
+                  "isVisible": "{{!!appsmith.store.selectedDocument}}",
+                  "leftColumn": 4,
+                  "rightColumn": 60,
+                  "topRow": 74,
+                  "type": "CONTAINER_WIDGET",
+                  "version": 1,
+                  "widgetId": "ai_analysis_container",
+                  "widgetName": "AIAnalysisContainer"
+                }
+              ]
+            }
+          }
+        ],
+        "userPermissions": []
+      }
+    ],
+    "pageList": [
+      {
+        "id": "Dashboard",
+        "name": "Dashboard",
+        "isDefault": true,
+        "slug": "dashboard"
+      },
+      {
+        "id": "CaseDetails", 
+        "name": "CaseDetails",
+        "isDefault": false,
+        "slug": "casedetails"
+      }
+    ],
+    "publishedPages": [
+      {
+        "id": "Dashboard",
+        "name": "Dashboard",
+        "isDefault": true,
+        "slug": "dashboard"
+      },
+      {
+        "id": "CaseDetails",
+        "name": "CaseDetails", 
+        "isDefault": false,
+        "slug": "casedetails"
+      }
+    ],
+    "publishedActionCollections": [],
+    "actionCollections": [],
+    "actions": [
+      {
+        "id": "getCases",
+        "name": "getCases",
+        "fullyQualifiedName": "getCases",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "Dashboard",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  case_id,\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\nFROM cases \nORDER BY case_id DESC;"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [],
+        "userSetOnLoad": false,
+        "pluginType": "DB",
+        "pluginId": "postgres-plugin"
+      },
+      {
+        "id": "createCase",
+        "name": "createCase", 
+        "fullyQualifiedName": "createCase",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "Dashboard",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "INSERT INTO cases (\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\n) VALUES (\n  {{ CaseNameInput.text }},\n  {{ ClientNameInput.text }},\n  {{ CaseNumberInput.text }},\n  {{ CaseDescriptionInput.text }},\n  'Active',\n  NOW(),\n  NOW()\n) RETURNING case_id;"
+        },
+        "executeOnLoad": false,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "CaseNameInput.text",
+          "ClientNameInput.text",
+          "CaseNumberInput.text", 
+          "CaseDescriptionInput.text"
+        ],
+        "userSetOnLoad": false,
+        "pluginType": "DB",
+        "pluginId": "postgres-plugin"
+      },
+      {
+        "id": "getCaseInfo",
+        "name": "getCaseInfo",
+        "fullyQualifiedName": "getCaseInfo",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "CaseDetails",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE", 
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  case_id,\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\nFROM cases \nWHERE case_id = {{ appsmith.URL.queryParams.case_id }};"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "appsmith.URL.queryParams.case_id"
+        ],
+        "userSetOnLoad": false,
+        "pluginType": "DB",
+        "pluginId": "postgres-plugin"
+      },
+      {
+        "id": "getCaseDocuments",
+        "name": "getCaseDocuments",
+        "fullyQualifiedName": "getCaseDocuments",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "CaseDetails",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  document_id,\n  document_name,\n  s3_path,\n  event_date,\n  document_type,\n  ai_analysis,\n  created_at\nFROM documents \nWHERE case_id = {{ appsmith.URL.queryParams.case_id }}\nORDER BY event_date ASC;"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "appsmith.URL.queryParams.case_id"
+        ],
+        "userSetOnLoad": false,
+        "pluginType": "DB",
+        "pluginId": "postgres-plugin"
+      }
+    ],
+    "datasources": [
+      {
+        "id": "PostgreSQL",
+        "name": "PostgreSQL",
+        "pluginId": "postgres-plugin",
+        "datasourceConfiguration": {
+          "connection": {
+            "mode": "READ_WRITE"
+          }
+        }
+      }
+    ],
+    "themes": [],
+    "customJSLibs": [],
+    "theme": {},
+    "applicationDetail": {
+      "appPositioning": {
+        "type": "FIXED"
+      },
+      "navigationSetting": {},
+      "themeSetting": {
+        "appMaxWidth": "LARGE",
+        "density": 1,
+        "sizing": 1
+      }
+    },
+    "color": "#F5D1D1",
+    "icon": "bar-graph"
+  }
+}

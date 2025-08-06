@@ -1,0 +1,484 @@
+{
+  "clientSchemaVersion": 1,
+  "serverSchemaVersion": 5,
+  "pageList": [
+    {
+      "id": "Dashboard",
+      "name": "Dashboard",
+      "isDefault": true,
+      "slug": "dashboard"
+    },
+    {
+      "id": "CaseDetails",
+      "name": "CaseDetails", 
+      "isDefault": false,
+      "slug": "casedetails"
+    }
+  ],
+  "publishedPageList": [
+    {
+      "id": "Dashboard", 
+      "name": "Dashboard",
+      "isDefault": true,
+      "slug": "dashboard"
+    },
+    {
+      "id": "CaseDetails",
+      "name": "CaseDetails",
+      "isDefault": false, 
+      "slug": "casedetails"
+    }
+  ],
+  "actions": [
+    {
+      "unpublishedAction": {
+        "name": "getCases",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "Dashboard",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  case_id,\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\nFROM cases \nORDER BY case_id DESC;"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [],
+        "userSetOnLoad": false
+      },
+      "id": "getCases",
+      "pluginType": "DB",
+      "pluginId": "postgres-plugin"
+    },
+    {
+      "unpublishedAction": {
+        "name": "createCase",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "Dashboard",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "INSERT INTO cases (\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\n) VALUES (\n  {{ CaseNameInput.text }},\n  {{ ClientNameInput.text }},\n  {{ CaseNumberInput.text }},\n  {{ CaseDescriptionInput.text }},\n  'Active',\n  NOW(),\n  NOW()\n) RETURNING case_id;"
+        },
+        "executeOnLoad": false,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "CaseNameInput.text",
+          "ClientNameInput.text",
+          "CaseNumberInput.text",
+          "CaseDescriptionInput.text"
+        ],
+        "userSetOnLoad": false
+      },
+      "id": "createCase",
+      "pluginType": "DB",
+      "pluginId": "postgres-plugin"
+    },
+    {
+      "unpublishedAction": {
+        "name": "getCaseInfo",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "CaseDetails",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  case_id,\n  case_name,\n  client_name,\n  case_number,\n  description,\n  status,\n  created_at,\n  updated_at\nFROM cases \nWHERE case_id = {{ appsmith.URL.queryParams.case_id }};"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "appsmith.URL.queryParams.case_id"
+        ],
+        "userSetOnLoad": false
+      },
+      "id": "getCaseInfo",
+      "pluginType": "DB",
+      "pluginId": "postgres-plugin"
+    },
+    {
+      "unpublishedAction": {
+        "name": "getCaseDocuments",
+        "datasource": {
+          "name": "PostgreSQL",
+          "pluginId": "postgres-plugin"
+        },
+        "pageId": "CaseDetails",
+        "actionConfiguration": {
+          "timeoutInMillisecond": 10000,
+          "paginationType": "NONE",
+          "encodeParamsToggle": true,
+          "body": "SELECT \n  document_id,\n  document_name,\n  s3_path,\n  event_date,\n  document_type,\n  ai_analysis,\n  created_at\nFROM documents \nWHERE case_id = {{ appsmith.URL.queryParams.case_id }}\nORDER BY event_date ASC;"
+        },
+        "executeOnLoad": true,
+        "dynamicBindingPathList": [
+          {
+            "key": "body"
+          }
+        ],
+        "isValid": true,
+        "invalids": [],
+        "messages": [],
+        "jsonPathKeys": [
+          "appsmith.URL.queryParams.case_id"
+        ],
+        "userSetOnLoad": false
+      },
+      "id": "getCaseDocuments",
+      "pluginType": "DB",
+      "pluginId": "postgres-plugin"
+    }
+  ],
+  "actionCollections": [],
+  "datasources": [
+    {
+      "unpublishedDatasource": {
+        "name": "PostgreSQL",
+        "pluginId": "postgres-plugin",
+        "datasourceConfiguration": {
+          "connection": {
+            "mode": "READ_WRITE"
+          }
+        }
+      },
+      "id": "PostgreSQL"
+    }
+  ],
+  "exportedApplication": {
+    "name": "Legal Case Management System",
+    "applicationVersion": 2,
+    "collapseInvisibleWidgets": true,
+    "color": "#F5D1D1",
+    "evaluationVersion": 2,
+    "icon": "bar-graph",
+    "applicationDetail": {
+      "appPositioning": {
+        "type": "FIXED"
+      },
+      "navigationSetting": {},
+      "themeSetting": {
+        "appMaxWidth": "LARGE",
+        "density": 1.0,
+        "sizing": 1.0
+      }
+    },
+    "pages": [
+      {
+        "unpublishedPage": {
+          "name": "Dashboard",
+          "slug": "dashboard",
+          "layouts": [
+            {
+              "viewMode": false,
+              "dsl": {
+                "widgetName": "MainContainer",
+                "backgroundColor": "none",
+                "rightColumn": 4896,
+                "snapColumns": 64,
+                "detachFromLayout": true,
+                "widgetId": "0",
+                "topRow": 0,
+                "bottomRow": 380,
+                "containerStyle": "none",
+                "snapRows": 124,
+                "parentRowSpace": 1,
+                "type": "CANVAS_WIDGET",
+                "canExtend": true,
+                "version": 17,
+                "minHeight": 1292,
+                "parentColumnSpace": 1,
+                "leftColumn": 0,
+                "children": [
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": "0.375rem",
+                    "bottomRow": 6,
+                    "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    "leftColumn": 4,
+                    "rightColumn": 60,
+                    "text": "Legal Case Management System",
+                    "textAlign": "CENTER",
+                    "textSize": "HEADING1",
+                    "topRow": 2,
+                    "type": "TEXT_WIDGET",
+                    "version": 1,
+                    "widgetId": "title_text",
+                    "widgetName": "TitleText"
+                  },
+                  {
+                    "backgroundColor": "#3366FF",
+                    "bottomRow": 12,
+                    "buttonColor": "#3366FF",
+                    "leftColumn": 52,
+                    "onClick": "{{showModal('NewCaseModal')}}",
+                    "rightColumn": 60,
+                    "text": "New Case",
+                    "topRow": 8,
+                    "type": "BUTTON_WIDGET",
+                    "version": 1,
+                    "widgetId": "new_case_btn",
+                    "widgetName": "NewCaseButton"
+                  },
+                  {
+                    "bottomRow": 32,
+                    "columnOrder": [
+                      "case_id",
+                      "case_name",
+                      "client_name", 
+                      "created_at",
+                      "status"
+                    ],
+                    "defaultPageSize": 10,
+                    "dynamicBindingPathList": [
+                      {
+                        "key": "tableData"
+                      }
+                    ],
+                    "leftColumn": 4,
+                    "onRowClick": "{{navigateTo('CaseDetails', {case_id: currentRow.case_id}, 'SAME_WINDOW')}}",
+                    "primaryColumns": {
+                      "case_id": {
+                        "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.case_id))}}",
+                        "id": "case_id",
+                        "label": "Case ID",
+                        "originalId": "case_id",
+                        "width": 100
+                      },
+                      "case_name": {
+                        "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.case_name))}}",
+                        "id": "case_name",
+                        "label": "Case Name",
+                        "originalId": "case_name", 
+                        "width": 200
+                      },
+                      "client_name": {
+                        "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.client_name))}}",
+                        "id": "client_name",
+                        "label": "Client Name",
+                        "originalId": "client_name",
+                        "width": 150
+                      },
+                      "created_at": {
+                        "computedValue": "{{CasesTable.tableData.map((currentRow) => ( moment(currentRow.created_at).format('MMM DD, YYYY')))}}",
+                        "id": "created_at",
+                        "label": "Created",
+                        "originalId": "created_at",
+                        "width": 120
+                      },
+                      "status": {
+                        "computedValue": "{{CasesTable.tableData.map((currentRow) => ( currentRow.status || 'Active'))}}",
+                        "id": "status",
+                        "label": "Status",
+                        "originalId": "status",
+                        "width": 100
+                      }
+                    },
+                    "rightColumn": 60,
+                    "tableData": "{{getCases.data}}",
+                    "topRow": 14,
+                    "type": "TABLE_WIDGET",
+                    "version": 3,
+                    "widgetId": "cases_table", 
+                    "widgetName": "CasesTable"
+                  },
+                  {
+                    "animateLoading": true,
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": "0.375rem",
+                    "bottomRow": 280,
+                    "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    "children": [
+                      {
+                        "backgroundColor": "#FFFFFF",
+                        "borderRadius": "0.375rem",
+                        "bottomRow": 6,
+                        "leftColumn": 2,
+                        "rightColumn": 62,
+                        "text": "Create New Case",
+                        "textAlign": "CENTER",
+                        "textSize": "HEADING2",
+                        "topRow": 1,
+                        "type": "TEXT_WIDGET",
+                        "version": 1,
+                        "widgetId": "modal_title",
+                        "widgetName": "ModalTitle"
+                      },
+                      {
+                        "backgroundColor": "#FAFAFA",
+                        "borderRadius": "0.375rem",
+                        "bottomRow": 12,
+                        "leftColumn": 2,
+                        "placeholderText": "Enter case name",
+                        "rightColumn": 32,
+                        "text": "",
+                        "topRow": 8,
+                        "type": "INPUT_WIDGET",
+                        "validation": true,
+                        "version": 2,
+                        "widgetId": "case_name_input", 
+                        "widgetName": "CaseNameInput"
+                      },
+                      {
+                        "backgroundColor": "#FAFAFA",
+                        "borderRadius": "0.375rem",
+                        "bottomRow": 12,
+                        "leftColumn": 34,
+                        "placeholderText": "Enter client name",
+                        "rightColumn": 62,
+                        "text": "",
+                        "topRow": 8,
+                        "type": "INPUT_WIDGET",
+                        "validation": true,
+                        "version": 2,
+                        "widgetId": "client_name_input",
+                        "widgetName": "ClientNameInput"
+                      },
+                      {
+                        "backgroundColor": "#DC2626",
+                        "bottomRow": 18,
+                        "buttonColor": "#DC2626", 
+                        "leftColumn": 44,
+                        "onClick": "{{closeModal('NewCaseModal')}}",
+                        "rightColumn": 52,
+                        "text": "Cancel",
+                        "topRow": 14,
+                        "type": "BUTTON_WIDGET",
+                        "version": 1,
+                        "widgetId": "cancel_btn",
+                        "widgetName": "CancelButton"
+                      },
+                      {
+                        "backgroundColor": "#059669",
+                        "bottomRow": 18,
+                        "buttonColor": "#059669",
+                        "leftColumn": 54,
+                        "onClick": "{{createCase.run().then(() => {getCases.run(); closeModal('NewCaseModal'); showAlert('Case created successfully!', 'success')})}}",
+                        "rightColumn": 62,
+                        "text": "Save Case",
+                        "topRow": 14,
+                        "type": "BUTTON_WIDGET",
+                        "version": 1,
+                        "widgetId": "save_btn",
+                        "widgetName": "SaveButton"
+                      }
+                    ],
+                    "height": 400,
+                    "leftColumn": 0,
+                    "rightColumn": 64,
+                    "shouldScrollContents": false,
+                    "topRow": 120,
+                    "type": "MODAL_WIDGET",
+                    "version": 2,
+                    "widgetId": "new_case_modal",
+                    "widgetName": "NewCaseModal",
+                    "width": 456
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "id": "Dashboard",
+        "isDefault": true
+      },
+      {
+        "unpublishedPage": {
+          "name": "CaseDetails",
+          "slug": "casedetails",
+          "layouts": [
+            {
+              "viewMode": false,
+              "dsl": {
+                "widgetName": "MainContainer",
+                "backgroundColor": "none",
+                "rightColumn": 4896,
+                "snapColumns": 64,
+                "detachFromLayout": true,
+                "widgetId": "0",
+                "topRow": 0,
+                "bottomRow": 580,
+                "containerStyle": "none",
+                "snapRows": 124,
+                "parentRowSpace": 1,
+                "type": "CANVAS_WIDGET",
+                "canExtend": true,
+                "version": 17,
+                "minHeight": 1292,
+                "parentColumnSpace": 1,
+                "leftColumn": 0,
+                "children": [
+                  {
+                    "backgroundColor": "#3366FF",
+                    "bottomRow": 4,
+                    "buttonColor": "#3366FF",
+                    "leftColumn": 4,
+                    "onClick": "{{navigateTo('Dashboard', {}, 'SAME_WINDOW')}}",
+                    "rightColumn": 12,
+                    "text": "← Back",
+                    "topRow": 0,
+                    "type": "BUTTON_WIDGET",
+                    "version": 1,
+                    "widgetId": "back_btn",
+                    "widgetName": "BackButton"
+                  },
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": "0.375rem",
+                    "bottomRow": 10,
+                    "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    "dynamicBindingPathList": [
+                      {
+                        "key": "text"
+                      }
+                    ],
+                    "leftColumn": 4,
+                    "rightColumn": 60,
+                    "text": "{{getCaseInfo.data[0]?.case_name || 'Case Details'}}",
+                    "textAlign": "CENTER",
+                    "textSize": "HEADING1",
+                    "topRow": 5,
+                    "type": "TEXT_WIDGET",
+                    "version": 1,
+                    "widgetId": "case_title",
+                    "widgetName": "CaseTitle"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "id": "CaseDetails",
+        "isDefault": false
+      }
+    ],
+    "customJSLibs": [],
+    "theme": {}
+  }
+}
